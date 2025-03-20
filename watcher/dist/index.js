@@ -1,0 +1,2 @@
+// @bun
+import{watch as h}from"chokidar";var u=(...e)=>{let r=[];e.forEach((t)=>{r.push(...t.imported,t.path)}),h(r,{persistent:!0}).on("change",(t)=>{e.some((n)=>{let{imported:i,path:o}=n;if(i.includes(t)||o===t)return Bun.spawn(["bun","run",o],{stdio:["inherit","inherit","inherit"]}),console.log(`shweet ${n.name} @ ${new Date().toLocaleTimeString()}`),!0;return!1})});return};export{u as default};
