@@ -251,6 +251,9 @@ export class BACKGROUND {
   get POSITION() {
     return new POSITION();
   }
+  get random() {
+    return new COLOR({ data: { prop: "backgroundColor" } }).random;
+  }
   color(color: any) {
     return new COLOR({ data: { prop: "backgroundColor" } }).color(color);
   }

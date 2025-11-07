@@ -128,6 +128,13 @@ export class BORDER extends Medyas<BORDER, { side: string }> {
     };
     return this;
   }
+  get random() {
+    const PR = ["border", this.data.side, ""].join("");
+    this._value = {
+      [PR]: ["1px solid", RANDOM()[0]],
+    };
+    return this;
+  }
   get bRandom() {
     const PR = ["border", this.data.side, ""].join("");
     this._value = {

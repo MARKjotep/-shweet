@@ -30,7 +30,11 @@ export class PROP extends PROXY<PROP, {}> {
     const vals = props[val];
     //
     vals.forEach((v) => {
-      this.properties.add(v);
+      if (v === "none") {
+        this.properties.clear();
+      } else {
+        this.properties.add(v);
+      }
     });
     return [...this.properties];
   };
@@ -119,31 +123,95 @@ CLASS ALL
 -------------------------
 */
 
-export class TRANS_ANIM {
-  constructor(private isAnim: boolean = false) {}
+export class TRANS_ANIM extends PROXY<TRANS_ANIM, { isAnim: boolean }> {
+  [k: number]: this;
+  declare 0.25: this;
+  declare 0.5: this;
+  declare 0.75: this;
+  declare 1: this;
+  declare 1.5: this;
+  declare 2: this;
+  declare 2.5: this;
+  declare 3: this;
+  declare 3.5: this;
+  declare 4: this;
+  declare 4.5: this;
+  declare 5: this;
+  prop: string;
+  constructor({ prefix = "", data = { isAnim: false }, values = {} } = {}) {
+    super({ prefix, data, values });
+    //
+    this.prop = this.data.isAnim ? "animationDuration" : "transitionDuration";
+  }
+
+  protected valFN = (val: string) => {
+    return `${val}s`;
+  };
+  protected propFN = () => {
+    return this.prop;
+  };
+  // constructor(private isAnim: boolean = false) {}
   get TIMING() {
     return new TIMING({
       data: {
-        prop: this.isAnim
+        prop: this.data.isAnim
           ? "animationTimingFunction"
           : "transitionTimingFunction",
       },
+      values: this._values,
     });
   }
   get DELAY() {
     return new DELAY_DUR({
-      data: { prop: this.isAnim ? "animationDelay" : "transitionDelay" },
+      data: { prop: this.data.isAnim ? "animationDelay" : "transitionDelay" },
+      values: this._values,
     });
   }
   get DURATION() {
     return new DELAY_DUR({
-      data: { prop: this.isAnim ? "animationDuration" : "transitionDuration" },
+      data: {
+        prop: this.data.isAnim ? "animationDuration" : "transitionDuration",
+        values: this._values,
+      },
     });
+  }
+  get none() {
+    const pr = this.data.isAnim ? "animation" : "transition";
+    this._value = {
+      [pr]: "none",
+    };
+    return this;
+  }
+  value(val: any) {
+    const pr = this.data.isAnim ? "animation" : "transition";
+    //
+    this._value = {
+      [pr]: val,
+    };
+    return this;
+  }
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    const pr = this.data.isAnim ? "animation" : "transition";
+    this._value = {
+      [pr]: f.var(val, optional),
+    };
+    return this;
   }
 }
 
 export class TRANSITION extends TRANS_ANIM {
   get PROPERTY() {
-    return new PROP();
+    return new PROP({
+      values: this._values,
+    });
+  }
+  property(...val: any[]) {
+    return new PROP({
+      values: this._values,
+    }).property(...val);
   }
 }

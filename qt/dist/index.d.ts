@@ -66,15 +66,46 @@ declare class DELAY_DUR extends PROXY<DELAY_DUR, {
     protected valFN: (val: string) => string;
     protected propFN: () => string;
 }
-declare class TRANS_ANIM {
-    private isAnim;
-    constructor(isAnim?: boolean);
+declare class TRANS_ANIM extends PROXY<TRANS_ANIM, {
+    isAnim: boolean;
+}> {
+    [k: number]: this;
+    0.25: this;
+    0.5: this;
+    0.75: this;
+    1: this;
+    1.5: this;
+    2: this;
+    2.5: this;
+    3: this;
+    3.5: this;
+    4: this;
+    4.5: this;
+    5: this;
+    prop: string;
+    constructor({ prefix, data, values }?: {
+        prefix?: string | undefined;
+        data?: {
+            isAnim: boolean;
+        } | undefined;
+        values?: {} | undefined;
+    });
+    protected valFN: (val: string) => string;
+    protected propFN: () => string;
     get TIMING(): TIMING;
     get DELAY(): DELAY_DUR;
     get DURATION(): DELAY_DUR;
+    get none(): this;
+    value(val: any): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 declare class TRANSITION extends TRANS_ANIM {
     get PROPERTY(): PROP;
+    property(...val: any[]): PROP;
 }
 
 declare class PRESET extends Medyas<PRESET, {
@@ -640,6 +671,7 @@ declare class BORDER extends Medyas<BORDER, {
     get BOTTOM(): BORDER;
     get b1(): this;
     get bRed(): this;
+    get random(): this;
     get bRandom(): this;
     get COLOR(): COLOR;
 }
@@ -1018,6 +1050,7 @@ declare class BACKGROUND {
     get SIZE(): SIZE$1;
     get IMAGE(): IMAGE;
     get POSITION(): POSITION;
+    get random(): COLOR;
     color(color: any): COLOR;
 }
 

@@ -111,10 +111,10 @@ class _ANIMATION extends MISC {
     return new TRANSITION();
   }
   static get ANIMATION() {
-    return new ANIMATION(true);
+    return new ANIMATION({ data: { isAnim: true } });
   }
   static animation(val: CSSinR) {
-    return new ANIMATION(true).animation(val);
+    return new ANIMATION({ data: { isAnim: true } }).animation(val);
   }
 }
 

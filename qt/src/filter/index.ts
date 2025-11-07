@@ -1,4 +1,4 @@
-import { $$, oItems } from "../@";
+import { oItems } from "../@";
 import { getShadow, shadowCFG } from "../box";
 import { PROXY } from "../proxy";
 import { f } from "shweet";

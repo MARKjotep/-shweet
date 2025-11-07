@@ -52,3 +52,5 @@ import { PROXY } from "../src/proxy";
 //     return;
 //   }
 // });
+
+log.i = $.TRANSITION[0.5].property("all");

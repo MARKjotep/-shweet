@@ -148,18 +148,28 @@ export class ANIMATION extends TRANS_ANIM {
     return new PRESET({ data: { kf: kf } });
   }
   name(name: string) {
-    return new ANIM().name(name);
+    return new ANIM({
+      values: this._values,
+    }).name(name);
   }
   animation(val: CSSinR) {
-    return new ANIM().animation(val);
+    return new ANIM({
+      values: this._values,
+    }).animation(val);
   }
   get DIRECTION() {
-    return new DIRECTION();
+    return new DIRECTION({
+      values: this._values,
+    });
   }
   get FILL() {
-    return new FILL();
+    return new FILL({
+      values: this._values,
+    });
   }
   get ITERATION() {
-    return new ITER();
+    return new ITER({
+      values: this._values,
+    });
   }
 }
